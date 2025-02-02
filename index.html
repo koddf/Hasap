@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+
+<html lang="tr">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Kedi Döviz Kuru Hesaplama</title>
+
+    <style>
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            margin: 20px;
+
+        }
+
+        .container {
+
+            max-width: 400px;
+
+            margin: 0 auto;
+
+            padding: 20px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 10px;
+
+            background-color: #f9f9f9;
+
+        }
+
+        input, select, button {
+
+            width: 100%;
+
+            padding: 10px;
+
+            margin: 10px 0;
+
+            border: 1px solid #ccc;
+
+            border-radius: 5px;
+
+        }
+
+        button {
+
+            background-color: #4CAF50;
+
+            color: white;
+
+            cursor: pointer;
+
+        }
+
+        button:hover {
+
+            background-color: #45a049;
+
+        }
+
+        .result {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            margin-top: 20px;
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>Kedi Döviz Kuru Hesaplama</h1>
+
+        <input type="number" id="amountInput" placeholder="Miktar Girin">
+
+        <select id="fromCurrency">
+
+            <option value="RUB">RUB</option>
+
+            <option value="MANAT">MANAT</option>
+
+        </select>
+
+        <select id="toCurrency">
+
+            <option value="RUB">RUB</option>
+
+            <option value="MANAT">MANAT</option>
+
+        </select>
+
+        <button onclick="convertCurrency()">Hesapla</button>
+
+        <div class="result" id="resultText"></div>
+
+        <button onclick="editRates()">Kurları Düzenle</button>
+
+    </div>
+
+    <script>
+
+        // Başlangıç kurları
+
+        let rubToManatRate = 5.4; // 1 RUB = 5.4 MANAT
+
+        let manatToRubRate = 0.18; // 1 MANAT = 0.18 RUB
+
+        // Döviz hesaplama fonksiyonu
+
+        function convertCurrency() {
+
+            const amount = parseFloat(document.getElementById('amountInput').value);
+
+            const fromCurrency = document.getElementById('fromCurrency').value;
+
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            if (isNaN(amount)) {
+
+                alert("Lütfen geçerli bir miktar girin!");
+
+                return;
+
+            }
+
+            let result;
+
+            if (fromCurrency === "RUB" && toCurrency === "MANAT") {
+
+                result = amount * rubToManatRate;
+
+            } else if (fromCurrency === "MANAT" && toCurrency === "RUB") {
+
+                result = amount * manatToRubRate;
+
+            } else {
+
+                result = amount; // Aynı para birimiyse değişiklik yapma
+
+            }
+
+            document.getElementById('resultText').innerText = `Sonuç: ${result.toFixed(2)} ${toCurrency}`;
+
+        }
+
+        // Kurları düzenleme fonksiyonu
+
+        function editRates() {
+
+            const newRubToManat = prompt("1 RUB kaç MANAT olsun?", rubToManatRate);
+
+            const newManatToRub = prompt("1 MANAT kaç RUB olsun?", manatToRubRate);
+
+            if (newRubToManat && newManatToRub) {
+
+                rubToManatRate = parseFloat(newRubToManat);
+
+                manatToRubRate = parseFloat(newManatToRub);
+
+                alert("Kurlar güncellendi!");
+
+            }
+
+        }
+
+    </script>
+
+</body>
+
+</html>
